@@ -6,7 +6,7 @@ buildscript {
         google()
         mavenCentral()
         maven {
-            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
         }
     }
 
@@ -20,7 +20,7 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven {
-            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
         }
         flatDir {
             dirs project(':wb_cloud_face').file('libs')
