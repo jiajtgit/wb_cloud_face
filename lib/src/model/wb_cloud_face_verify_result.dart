@@ -7,8 +7,7 @@ import 'dart:convert';
 WbCloudFaceVerifyResult wbCloudFaceVerifyResultFromJson(String str) =>
     WbCloudFaceVerifyResult.fromJson(json.decode(str));
 
-String wbCloudFaceVerifyResultToJson(WbCloudFaceVerifyResult data) =>
-    json.encode(data.toJson());
+String wbCloudFaceVerifyResultToJson(WbCloudFaceVerifyResult data) => json.encode(data.toJson());
 
 class WbCloudFaceVerifyResult {
   WbCloudFaceVerifyResult({
@@ -25,11 +24,10 @@ class WbCloudFaceVerifyResult {
 
   bool get succeed => code == 200;
 
-  factory WbCloudFaceVerifyResult.fromJson(Map<String, dynamic> json) =>
-      WbCloudFaceVerifyResult(
+  factory WbCloudFaceVerifyResult.fromJson(Map<String, dynamic> json) => WbCloudFaceVerifyResult(
         code: json["code"],
         description: json["description"],
-        errorReason: json["errorReason"],
+        errorReason: json["errorReason"] ?? '',
         verifyResult: json["verifyResult"],
       );
 
