@@ -2,26 +2,35 @@ group 'tech.ucoon.wb_cloud_face'
 version '1.0'
 
 buildscript {
+    ext.kotlin_version = '1.8.22'
     repositories {
-        google()
-        mavenCentral()
-        maven {
-            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
-        }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+//        google()
+//        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // classpath 'com.android.tools.build:gradle:7.3.0'
     }
 }
 
+// allprojects {
+//     configurations.all {
+//         resolutionStrategy {
+//             force "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22"
+//             // 如果发现其他冲突的依赖也可以在此强制指定
+//         }
+//     }
+// }
+
 rootProject.allprojects {
     repositories {
-        google()
-        mavenCentral()
-        maven {
-            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
-        }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+//        google()
+//        mavenCentral()
         flatDir {
             dirs project(':wb_cloud_face').file('libs')
         }
@@ -31,7 +40,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -39,16 +48,18 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 24
         consumerProguardFiles 'webank-KYC-demo-proguard-rules.pro'
     }
 }
 
 dependencies {
     //0. appcompat
-    implementation "androidx.appcompat:appcompat:1.0.0"
+    implementation "com.android.support:appcompat-v7:28.0.0"
     //1. 云刷脸SDK
-    implementation(name: 'WbCloudFaceLiveSdk-v4.0.6-83c05192', ext: 'aar')
+//    implementation(name: 'WbCloudFaceLiveSdk-v4.0.6-83c05192', ext: 'aar')
+    implementation(name: 'WbCloudFaceLiveSdk-face-v6.1.0-3ca9d59c', ext: 'aar')
     //2. 云common SDK
-    implementation(name: 'WbCloudNormal-v5.0.6-f2277ff', ext: 'aar')
+    // implementation(name: 'WbCloudNormal-v5.0.6-f2277ff', ext: 'aar')
+    implementation(name: 'WbCloudNormal-v5.1.10-4e3e198', ext: 'aar')
 }

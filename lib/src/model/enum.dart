@@ -10,3 +10,13 @@ enum CompareType {
   idCard, //公安网纹图片对比
   none, //活体检测
 }
+
+enum Language {
+  languageZhCn,
+  languageZhHk,
+  languageEn,
+  languageId,
+  languageJa,
+  languageKo,
+  languageTh,
+}

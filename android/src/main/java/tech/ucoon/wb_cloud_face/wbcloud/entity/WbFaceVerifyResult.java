@@ -56,7 +56,7 @@ public class WbFaceVerifyResult {
         this.orderNo = orderNo;
     }
 
-    public static WbFaceVerifyResult setWbFaceVerifyResult(com.webank.facelight.api.result.WbFaceVerifyResult result) {
+    public static WbFaceVerifyResult setWbFaceVerifyResult(com.tencent.cloud.huiyansdkface.facelight.api.result.WbFaceVerifyResult result) {
         if (result == null) return null;
         WbFaceVerifyResult wbFaceVerifyResult = new WbFaceVerifyResult();
         wbFaceVerifyResult.setSuccess(result.isSuccess());

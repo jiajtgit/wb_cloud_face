@@ -1,55 +1,57 @@
 import 'dart:convert';
+
 import 'package:wb_cloud_face/src/model/enum.dart';
 
 WbCloudFaceVerifyConfig wbCloudFaceVerifyConfigFromJson(String str) =>
     WbCloudFaceVerifyConfig.fromJson(json.decode(str));
 
-String wbCloudFaceVerifyConfigToJson(WbCloudFaceVerifyConfig data) =>
-    json.encode(data.toJson());
+String wbCloudFaceVerifyConfigToJson(WbCloudFaceVerifyConfig data) => json.encode(data.toJson());
 
 class WbCloudFaceVerifyConfig {
   WbCloudFaceVerifyConfig({
-    this.showSuccessPage = false,
-    this.showFailPage = false,
+    this.language = Language.languageZhCn,
+    this.customerTipsLive = '',
+    this.customerTipsUpload = '',
+    this.customerTipsLoc = 0,
+    this.videoCheck = true,
     this.colorMode = ColorMode.black,
     this.videoUpload = true,
-    this.isIpv6 = false,
-    this.enableCloseEyes = false,
     this.playVoice = true,
     this.compareType = CompareType.idCard,
   });
 
-  bool showSuccessPage; //是否展示刷脸成功页面，默认不展示
-  bool showFailPage; //是否展示刷脸失败页面，默认不展示
-  ColorMode colorMode; //颜色设置，默认黑色
-  bool videoUpload; //是否需要录制上传视频，默认需要
-  bool isIpv6; //是否使用ipv6网络，默认不使用
-  bool enableCloseEyes; //是否开启闭眼检测，默认不开启
+  Language language; //语言，默认中文
+  String customerTipsLive; //活体检测提示语，默认空
+  String customerTipsUpload; //上传提示语，默认空
+  int customerTipsLoc; //上传提示语位置，默认中间
+  bool videoCheck; //是否需要录制上传视频，默认需要
   bool playVoice; //是否播放提示音，默认播放
+  bool videoUpload; //是否需要录制上传视频，默认需要
+  ColorMode colorMode; //颜色设置，默认黑色
   CompareType compareType; //比对类型，默认为公安网纹图片对比
 
-  factory WbCloudFaceVerifyConfig.fromJson(Map<String, dynamic> json) =>
-      WbCloudFaceVerifyConfig(
-        showSuccessPage: json["showSuccessPage"],
-        showFailPage: json["showFailPage"],
-        colorMode: ColorMode.values
-            .firstWhere((element) => element.name == json["colorMode"]),
+  factory WbCloudFaceVerifyConfig.fromJson(Map<String, dynamic> json) => WbCloudFaceVerifyConfig(
+        language: Language.values.firstWhere((element) => element.name == json["language"]),
+        customerTipsLive: json["customerTipsLive"],
+        customerTipsUpload: json["customerTipsUpload"],
+        customerTipsLoc: json["customerTipsLoc"],
+        videoCheck: json["videoCheck"],
+        colorMode: ColorMode.values.firstWhere((element) => element.name == json["colorMode"]),
         videoUpload: json["videoUpload"],
-        isIpv6: json["isIpv6"],
-        enableCloseEyes: json["enableCloseEyes"],
         playVoice: json["playVoice"],
-        compareType: CompareType.values
-            .firstWhere((element) => element.name == json["compareType"]),
+        compareType:
+            CompareType.values.firstWhere((element) => element.name == json["compareType"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "showSuccessPage": showSuccessPage,
-        "showFailPage": showFailPage,
         "colorMode": colorMode.name,
         "videoUpload": videoUpload,
-        "isIpv6": isIpv6,
-        "enableCloseEyes": enableCloseEyes,
         "playVoice": playVoice,
         "compareType": compareType.name,
+        "language": language.name,
+        "customerTipsLive": customerTipsLive,
+        "customerTipsUpload": customerTipsUpload,
+        "customerTipsLoc": customerTipsLoc,
+        "videoCheck": videoCheck,
       };
 }

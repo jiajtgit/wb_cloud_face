@@ -75,8 +75,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildDataInputWidget(
-      String label, String hintText, TextEditingController controller) {
+  Widget _buildDataInputWidget(String label, String hintText, TextEditingController controller) {
     return Row(
       children: <Widget>[
         SizedBox(
@@ -124,27 +123,16 @@ class HomePage extends StatelessWidget {
       faceId: '', //此次刷脸用户标识，合作方需要向人脸识别后台拉取获得，详见获取 faceId 接口
     );
     WbCloudFaceVerifyConfig config = WbCloudFaceVerifyConfig(
-      showSuccessPage:
-          StorageUtil().getBool('showSuccessPage', defValue: false),
-      showFailPage: StorageUtil().getBool('showFailPage', defValue: false),
       colorMode: ColorMode.values.firstWhere((element) =>
-          element.name ==
-          StorageUtil().getString('colorMode', defValue: ColorMode.black.name)),
+          element.name == StorageUtil().getString('colorMode', defValue: ColorMode.black.name)),
       videoUpload: StorageUtil().getBool('videoUpload', defValue: true),
-      isIpv6: StorageUtil().getBool('isIpv6', defValue: false),
-      enableCloseEyes:
-          StorageUtil().getBool('enableCloseEyes', defValue: false),
       playVoice: StorageUtil().getBool('playVoice', defValue: true),
       compareType: CompareType.values.firstWhere((element) =>
           element.name ==
-          StorageUtil()
-              .getString('compareType', defValue: CompareType.idCard.name)),
+          StorageUtil().getString('compareType', defValue: CompareType.idCard.name)),
     );
-    WbCloudFaceVerifyResult res =
-        await WbCloudFace.openCloudFaceService(params, config: config);
-    Fluttertoast.showToast(
-        msg: '认证${res.succeed ? '成功' : '失败'}, 说明：${res.description}');
-    debugPrint(
-        'HomePage._openCloudFaceService verifyResult ${res.verifyResult}');
+    WbCloudFaceVerifyResult res = await WbCloudFace.openCloudFaceService(params, config: config);
+    Fluttertoast.showToast(msg: '认证${res.succeed ? '成功' : '失败'}, 说明：${res.description}');
+    debugPrint('HomePage._openCloudFaceService verifyResult ${res.verifyResult}');
   }
 }

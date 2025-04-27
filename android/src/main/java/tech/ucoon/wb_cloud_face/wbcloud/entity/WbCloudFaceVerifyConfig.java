@@ -1,6 +1,6 @@
 package tech.ucoon.wb_cloud_face.wbcloud.entity;
 
-import com.webank.facelight.api.WbCloudFaceContant;
+import com.tencent.cloud.huiyansdkface.facelight.api.WbCloudFaceContant;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -8,15 +8,41 @@ import org.jetbrains.annotations.NotNull;
  * 人脸核身配置参数类
  */
 public class WbCloudFaceVerifyConfig {
-    /**
-     * 是否展示刷脸成功页面，默认不展示
+    /*
+        * 语言包设置，默认简体中文
+        * 可选值：
+        * 简体中文  WbCloudFaceContant.LANGUAGE_ZH_CN
+        * 繁体中文  WbCloudFaceContant.LANGUAGE_ZH_HK
+        * 英语  WbCloudFaceContant.LANGUAGE_EN
+        * 印尼语  WbCloudFaceContant.LANGUAGE_ID
+        * 日语  WbCloudFaceContant.LANGUAGE_JA
+        * 韩语  WbCloudFaceContant.LANGUAGE_KO
+        * 泰语 WbCloudFaceContant.LANGUAGE_TH
      */
-    private boolean showSuccessPage;
+    private String language = WbCloudFaceContant.LANGUAGE_ZH_CN;
 
-    /**
-     * 是否展示刷脸失败页面，默认不展示
+    /* 此处将设置人脸采集时的个性化提示语
+    * WbCloudFaceContant.CUSTOMER_TIPS_LIVE
+    */
+    private String customerTipsLive = "";
+
+    /* 此处将设置上传人脸时的个性化提示语
+    * WbCloudFaceContant.CUSTOMER_TIPS_UPLOAD
      */
-    private boolean showFailPage;
+    private String customerTipsUpload = "";
+
+    /* 设置合作方定制提示语的位置，默认为识别框的下方
+    * 识别框的下方： WbCloudFaceContant.CUSTOMER_TIPS_LOC_BOTTOM
+    * 识别框的上方：WbCloudFaceContant.CUSTOMER_TIPS_LOC_TOP
+    *   WbCloudFaceContant.CUSTOMER_TIPS_LOC
+    */
+    private int customerTipsLoc = WbCloudFaceContant.CUSTOMER_TIPS_LOC_BOTTOM;
+
+    /* 是否对录制视频进行检查,默认不检查，此处设置为不检查  */
+    private boolean videoCheck = false;
+
+    //设置是否打开语音提示，默认关闭，此处设置为关闭
+    private boolean playVoice = false;
 
     /**
      * 颜色设置，默认黑色
@@ -29,40 +55,54 @@ public class WbCloudFaceVerifyConfig {
     private boolean videoUpload = true;
 
     /**
-     * 是否使用ipv6网络，默认不使用
-     */
-    private boolean isIpv6;
-
-    /**
-     * 是否开启闭眼检测，默认不开启
-     */
-    private boolean enableCloseEyes;
-
-    /**
-     * 是否播放提示音，默认播放
-     */
-    private boolean playVoice = true;
-
-    /**
      * 比对类型，默认为公安网纹图片对比
      */
     private String compareType = WbCloudFaceContant.ID_CARD;
 
-    public boolean isShowSuccessPage() {
-        return showSuccessPage;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setShowSuccessPage(boolean showSuccessPage) {
-        this.showSuccessPage = showSuccessPage;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
-    public boolean isShowFailPage() {
-        return showFailPage;
+    public String getCustomerTipsLive() {
+        return customerTipsLive;
+    }
+    public void setCustomerTipsLive(String customerTipsLive) {
+        this.customerTipsLive = customerTipsLive;
     }
 
-    public void setShowFailPage(boolean showFailPage) {
-        this.showFailPage = showFailPage;
+    public String getCustomerTipsUpload() {
+        return customerTipsUpload;
     }
+    public void setCustomerTipsUpload(String customerTipsUpload) {
+        this.customerTipsUpload = customerTipsUpload;
+    }
+
+    public int getCustomerTipsLoc() {
+        return customerTipsLoc;
+    }
+    public void setCustomerTipsLoc(int customerTipsLoc) {
+        this.customerTipsLoc = customerTipsLoc;
+    }
+
+    public boolean isVideoCheck() {
+        return videoCheck;
+    }
+    public void setVideoCheck(boolean videoCheck) {
+        this.videoCheck = videoCheck;
+    }
+
+    public boolean isPlayVoice() {
+        return playVoice;
+    }
+
+    public void setPlayVoice(boolean playVoice) {
+        this.playVoice = playVoice;
+    }
+
 
     public String getColorMode() {
         return colorMode;
@@ -79,31 +119,6 @@ public class WbCloudFaceVerifyConfig {
     public void setVideoUpload(boolean videoUpload) {
         this.videoUpload = videoUpload;
     }
-
-    public boolean isIpv6() {
-        return isIpv6;
-    }
-
-    public void setIpv6(boolean ipv6) {
-        isIpv6 = ipv6;
-    }
-
-    public boolean isEnableCloseEyes() {
-        return enableCloseEyes;
-    }
-
-    public void setEnableCloseEyes(boolean enableCloseEyes) {
-        this.enableCloseEyes = enableCloseEyes;
-    }
-
-    public boolean isPlayVoice() {
-        return playVoice;
-    }
-
-    public void setPlayVoice(boolean playVoice) {
-        this.playVoice = playVoice;
-    }
-
     public String getCompareType() {
         return compareType;
     }
@@ -116,12 +131,14 @@ public class WbCloudFaceVerifyConfig {
     @Override
     public String toString() {
         return "WbCloudFaceVerifyConfig{" +
-                "showSuccessPage=" + showSuccessPage +
-                ", showFailPage=" + showFailPage +
+                "language='" + language + '\'' +
+                ", customerTipsLive='" + customerTipsLive + '\'' +
+                ", customerTipsUpload='" + customerTipsUpload + '\'' +
+                ", customerTipsLoc=" + customerTipsLoc +
+                ", videoCheck=" + videoCheck +
+                ", playVoice=" + playVoice +
                 ", colorMode='" + colorMode + '\'' +
                 ", videoUpload=" + videoUpload +
-                ", isIpv6=" + isIpv6 +
-                ", enableCloseEyes=" + enableCloseEyes +
                 ", playVoice=" + playVoice +
                 ", compareType='" + compareType + '\'' +
                 '}';

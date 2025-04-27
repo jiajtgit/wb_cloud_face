@@ -2,7 +2,7 @@ package tech.ucoon.wb_cloud_face;
 
 import android.app.Activity;
 import androidx.annotation.NonNull;
-import com.webank.facelight.api.WbCloudFaceVerifySdk;
+import com.tencent.cloud.huiyansdkface.facelight.api.WbCloudFaceVerifySdk;
 import java.util.HashMap;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;

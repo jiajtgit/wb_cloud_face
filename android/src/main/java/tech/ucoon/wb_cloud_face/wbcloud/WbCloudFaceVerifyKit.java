@@ -3,12 +3,12 @@ package tech.ucoon.wb_cloud_face.wbcloud;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import com.webank.facelight.api.FaceVerifyConfig;
-import com.webank.facelight.api.WbCloudFaceContant;
-import com.webank.facelight.api.WbCloudFaceVerifySdk;
-import com.webank.facelight.api.listeners.WbCloudFaceVerifyLoginListener;
-import com.webank.facelight.api.result.WbFaceError;
-import com.webank.facelight.process.FaceVerifyStatus;
+import com.tencent.cloud.huiyansdkface.facelight.api.FaceVerifyConfig;
+import com.tencent.cloud.huiyansdkface.facelight.api.WbCloudFaceContant;
+import com.tencent.cloud.huiyansdkface.facelight.api.WbCloudFaceVerifySdk;
+import com.tencent.cloud.huiyansdkface.facelight.api.listeners.WbCloudFaceVerifyLoginListener;
+import com.tencent.cloud.huiyansdkface.facelight.api.result.WbFaceError;
+import com.tencent.cloud.huiyansdkface.facelight.process.FaceVerifyStatus;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -59,26 +59,50 @@ public class WbCloudFaceVerifyKit {
         Bundle data = new Bundle();
         WbCloudFaceVerifyResult wbCloudFaceVerifyResult = new WbCloudFaceVerifyResult();
         data.putSerializable(WbCloudFaceContant.INPUT_DATA, inputData);
-        //是否展示刷脸成功页面，默认不展示
-        data.putBoolean(WbCloudFaceContant.SHOW_SUCCESS_PAGE, config.isShowSuccessPage());
-        //是否展示刷脸失败页面，默认不展示
-        data.putBoolean(WbCloudFaceContant.SHOW_FAIL_PAGE, config.isShowFailPage());
-        //颜色设置,sdk内置黑色和白色两种模式，默认黑色
-        //如果客户想定制自己的皮肤，可以传入WbCloudFaceContant.CUSTOM模式,此时可以配置ui里各种元素的色值
-        //定制详情参考app/res/colors.xml文件里各个参数
+        //个性化参数设置,此处均设置为与默认相反
+        //默认设置为简体中文，此处设置为英文
+        data.putString(WbCloudFaceContant.LANGUAGE, config.getLanguage());
+        //sdk样式设置，默认为白色
         data.putString(WbCloudFaceContant.COLOR_MODE, config.getColorMode());
-        //是否需要录制上传视频 默认需要
-        data.putBoolean(WbCloudFaceContant.VIDEO_UPLOAD, config.isVideoUpload());
-        //是否使用ipv6网络
-        data.putBoolean(WbCloudFaceContant.IS_IPV6, config.isIpv6());
-        //是否开启闭眼检测，默认不开启
-        data.putBoolean(WbCloudFaceContant.ENABLE_CLOSE_EYES, config.isEnableCloseEyes());
-        //是否播放提示音，默认播放
-        data.putBoolean(WbCloudFaceContant.PLAY_VOICE, config.isPlayVoice());
-        //设置选择的比对类型  默认为公安网纹图片对比
+        //定制合作方个性化提示语
+        //此处将设置人脸采集时的个性化提示语
+        data.putString(WbCloudFaceContant.CUSTOMER_TIPS_LIVE, config.getCustomerTipsLive());
+        //此处将设置上传人脸时的个性化提示语
+        data.putString(WbCloudFaceContant.CUSTOMER_TIPS_UPLOAD, config.getCustomerTipsUpload());
+        //设置合作方定制提示语的位置，默认为识别框的下方
+        //识别框的下方： WbCloudFaceContant.CUSTOMER_TIPS_LOC_BOTTOM
+        //识别框的上方：WbCloudFaceContant.CUSTOMER_TIPS_LOC_TOP
+        //此处设置为识别框的上方
+        data.putInt(WbCloudFaceContant.CUSTOMER_TIPS_LOC, config.getCustomerTipsLoc());
+        //设置选择的比对类型  默认为权威数据源对比
+        //此处设置权威数据源比对
         data.putString(WbCloudFaceContant.COMPARE_TYPE, config.getCompareType());
-        //打开美颜功能
-        FaceVerifyConfig.getInstance().enableFaceBeauty(false);
+        //是否需要录制上传视频 默认不需要，此处设置为不需要
+        data.putBoolean(WbCloudFaceContant.VIDEO_UPLOAD, config.isVideoUpload());
+        //是否对录制视频进行检查,默认不检查，此处设置为不检查
+        data.putBoolean(WbCloudFaceContant.VIDEO_CHECK, config.isVideoCheck());
+        //设置是否打开语音提示，默认关闭，此处设置为关闭
+        data.putBoolean(WbCloudFaceContant.PLAY_VOICE, config.isPlayVoice());
+        // //是否展示刷脸成功页面，默认不展示
+        // data.putBoolean(WbCloudFaceContant.SHOW_SUCCESS_PAGE, config.isShowSuccessPage());
+        // //是否展示刷脸失败页面，默认不展示
+        // data.putBoolean(WbCloudFaceContant.SHOW_FAIL_PAGE, config.isShowFailPage());
+        // //颜色设置,sdk内置黑色和白色两种模式，默认黑色
+        // //如果客户想定制自己的皮肤，可以传入WbCloudFaceContant.CUSTOM模式,此时可以配置ui里各种元素的色值
+        // //定制详情参考app/res/colors.xml文件里各个参数
+        // data.putString(WbCloudFaceContant.COLOR_MODE, config.getColorMode());
+        // //是否需要录制上传视频 默认需要
+        // data.putBoolean(WbCloudFaceContant.VIDEO_UPLOAD, config.isVideoUpload());
+        // //是否使用ipv6网络
+        // data.putBoolean(WbCloudFaceContant.IS_IPV6, config.isIpv6());
+        // //是否开启闭眼检测，默认不开启
+        // data.putBoolean(WbCloudFaceContant.ENABLE_CLOSE_EYES, config.isEnableCloseEyes());
+        // //是否播放提示音，默认播放
+        // data.putBoolean(WbCloudFaceContant.PLAY_VOICE, config.isPlayVoice());
+        // //设置选择的比对类型  默认为公安网纹图片对比
+        // data.putString(WbCloudFaceContant.COMPARE_TYPE, config.getCompareType());
+        // //打开美颜功能
+        // FaceVerifyConfig.getInstance().enableFaceBeauty(false);
 
         data.putBoolean(WbCloudFaceContant.IS_ENABLE_LOG, true);
 
